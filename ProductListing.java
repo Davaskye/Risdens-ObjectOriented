@@ -1,4 +1,4 @@
-package proj;
+//package proj;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,7 +21,7 @@ import javax.swing.JButton;
 //import javax.swing.table.*;
 import javax.swing.table.DefaultTableModel;
 //import java.util.Comparator;
-import java.util.Collections;
+//import java.util.Collections;
 //import java.awt.Color;
 
 import java.text.SimpleDateFormat; //used for date formatting
@@ -37,7 +37,7 @@ public class ProductListing extends JPanel {
 
     private JPanel pnlCommand;
     // private JPanel pnlDisplay;
-    private ArrayList<Product> plist; // promoter/Product listing
+    private ArrayList<Product> plist; // Product/Product listing
     private ProductListing thisForm;
     private JScrollPane scrollPane;
 
@@ -53,10 +53,10 @@ public class ProductListing extends JPanel {
 
         plist = loadProducts("Product.dat");
         String[] columnNames = { "ID",
-                "First Name",
-                "Last Name",
-                "Age",
-                "Budget" };
+                "Date",
+                "Product Name",
+                "Quantity",
+                "Cost" };
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
         showTable(plist);
@@ -72,27 +72,21 @@ public class ProductListing extends JPanel {
         // with buttons background to blue
         // pnlDisplay.setBackground(Color.ORANGE); //sets color of top window
 
-        cmdAddProduct = new JButton("Add Promoter");
-        cmdEditProduct = new JButton("Edit Promoter");
-        cmdRemoveProduct = new JButton("Remove Promoter");
-        cmdSortBudget = new JButton("Sort by Budget");
-        cmdSortName = new JButton("Sort by First Name");
+        cmdAddProduct = new JButton("Add Product");
+        cmdEditProduct = new JButton("Edit Product");
+        cmdRemoveProduct = new JButton("Remove Product");
         cmdChangelog = new JButton("Changelog");
         cmdClose = new JButton("Close");
 
         cmdAddProduct.addActionListener(new AddProductListener());
         cmdEditProduct.addActionListener(new EditProductListener());
         cmdRemoveProduct.addActionListener(new RemoveProductListener());
-        cmdSortName.addActionListener(new SortNameListener());
-        cmdSortBudget.addActionListener(new SortButtonListener());
         cmdChangelog.addActionListener(new ChangelogListener());
         cmdClose.addActionListener(new CloseButtonListener());
 
         pnlCommand.add(cmdAddProduct);
         pnlCommand.add(cmdEditProduct);
         pnlCommand.add(cmdRemoveProduct);
-        pnlCommand.add(cmdSortBudget);
-        pnlCommand.add(cmdSortName);
         pnlCommand.add(cmdChangelog);
         pnlCommand.add(cmdClose);
 
@@ -110,7 +104,7 @@ public class ProductListing extends JPanel {
 
     private void addToTable(Product p) {
         String[] name = p.getName().split(" ");
-        String[] item = { "" + p.getId(), name[0], name[1], "" + p.getAge(), "" + p.getBudget() };
+        String[] item = { "" + p.getSupplier(), name[0], name[1], "" + p.getQuantity(), "" + p.getPrice() };
 
         model.addRow(item);
     }
@@ -140,13 +134,13 @@ public class ProductListing extends JPanel {
         });
     }
 
-    // this updates the file storing information when a promoter is
+    // this updates the file storing information when a Product is
     // added/edited/deleted
     public void updateRecord() {
         try {
             PrintStream writer = new PrintStream(new FileOutputStream("Product.dat"));
             for (Product p : plist) {
-                writer.println(p.getName() + " " + p.getAge() + " " + p.getBudget());
+                writer.println(p.getName() + " " + p.getQuantity() + " " + p.getPrice());
             }
             writer.close();
         } catch (IOException error) {
@@ -189,7 +183,7 @@ public class ProductListing extends JPanel {
         updateChangelog(p, "Edited");
     }
 
-    // This loadProducts section loads the file with the promoters to add them to
+    // This loadProducts section loads the file with the Products to add them to
     // the display
     private ArrayList<Product> loadProducts(String pfile) {
         Scanner pscan = null;
@@ -199,10 +193,11 @@ public class ProductListing extends JPanel {
             while (pscan.hasNext()) {
                 String[] nextLine = pscan.nextLine().split(" ");
                 String name = nextLine[0] + " " + nextLine[1];
-                int age = Integer.parseInt(nextLine[2]);
-                double budget = Double.parseDouble(nextLine[3]);
+                String supplier = nextLine[0] + " " + nextLine[2];
+                int quantity = Integer.parseInt(nextLine[3]);
+                double price = Double.parseDouble(nextLine[4]);
 
-                Product p = new Product(name, age, budget);
+                Product p = new Product(name, quantity, price, supplier);
                 plist.add(p);
             }
 
@@ -286,8 +281,8 @@ public class ProductListing extends JPanel {
             JFrame f = new JFrame();
             int response = JOptionPane.showConfirmDialog(f,
                     "Do you want to remove this Product?\nName: " + p.getName() +
-                            "\nAge: " + p.getAge() +
-                            "\nBudget: " + p.getBudget(),
+                            "\nQuantity: " + p.getQuantity() +
+                            "\nPrice: " + p.getPrice(),
                     "Choose one", JOptionPane.YES_NO_OPTION);
             if (response == 0) {
                 thisForm.plist.remove(ID);

@@ -1,4 +1,4 @@
-// package proj;
+package Logs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,9 +72,15 @@ public class ChangelogScreen extends JFrame {
     }
 
     private void addToTable(Changelog c) {
-        //String[] name = c.getProductName().split(" "); // The constructor for Changelog has changed, therefore this needs to
-                                                // reflect that
-        String[] item = { c.getDate(), c.getTime(), c.getProductName(), c.getQuantity(), c.getCost(), c.getChange() }; // Same issue for this error ^^^
+        // String[] name = c.getProductName().split(" "); // The constructor for
+        // Changelog has changed, therefore this needs to
+        // reflect that
+        String[] item = { c.getDate(), c.getTime(), c.getProductName(), c.getQuantity(), c.getCost(), c.getChange() }; // Same
+                                                                                                                       // issue
+                                                                                                                       // for
+                                                                                                                       // this
+                                                                                                                       // error
+                                                                                                                       // ^^^
 
         model.addRow(item);
     }
@@ -92,12 +98,13 @@ public class ChangelogScreen extends JFrame {
                 String whatChanged = nextLine[3];
                 String changeDate = nextLine[4];
                 String changeTime = nextLine[5];
-                
-                Changelog c = new Changelog(changeDate, changeTime, productName, productQuantity, productPrice, whatChanged); // The constructor for
-                                                                                                 // Changelog has
-                                                                                                 // changed, therefore
-                                                                                                 // this needs to
-                                                                                                 // reflect that
+
+                Changelog c = new Changelog(changeDate, changeTime, productName, productQuantity, productPrice,
+                        whatChanged); // The constructor for
+                // Changelog has
+                // changed, therefore
+                // this needs to
+                // reflect that
                 clist.add(c);
             }
 

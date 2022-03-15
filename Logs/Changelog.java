@@ -1,4 +1,4 @@
-// package proj;
+package Logs;
 
 public class Changelog {
     private String date;
@@ -38,8 +38,7 @@ public class Changelog {
         return cost;
     }
 
-    public String getChange()
-    {
+    public String getChange() {
         return change;
     }
 

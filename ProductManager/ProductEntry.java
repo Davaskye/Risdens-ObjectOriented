@@ -1,35 +1,41 @@
 
-// package proj;
+package ProductManager;
+
 import java.awt.*;
 import javax.swing.*;
+
+import Login.StockController;
+
 import java.awt.event.ActionListener;
 //import java.io.IOError;
 import java.awt.event.ActionEvent;
 
-public class ProductEntry extends JFrame
-{
-    private static final long serialVersionUID = 1; //Version of software? Dunno. Jpanel asks for it though.
-    private JTextField  txtName;      //product name
-    private JTextField  txtQuantity;  //quantity
-    private JTextField  txtPrice;     //price
-    private JTextField  txtSupplier;  //supplier
-    private JButton     cmdSave;
-    private JButton     cmdClose;
-    //private JButton     cmdClearAll;
+public class ProductEntry extends JFrame {
+    private static final long serialVersionUID = 1; // Version of software? Dunno. Jpanel asks for it though.
+    private JTextField txtName; // product name
+    private JTextField txtQuantity; // quantity
+    private JTextField txtPrice; // price
+    private JTextField txtSupplier; // supplier
+    private JButton cmdSave;
+    private JButton cmdClose;
+    // private JButton cmdClearAll;
 
-    private JPanel      pnlCommand;
-    private JPanel      pnlDisplay;
+    private JPanel pnlCommand;
+    private JPanel pnlDisplay;
     private StockController productListingVar;
     private Product editP;
     private int editID;
-  /** @param StockController Lets you enter a product listing and sets up the panels and buttons */
-    public ProductEntry(StockController productListingVar)
-    {
+
+    /**
+     * @param StockController Lets you enter a product listing and sets up the
+     *                        panels and buttons
+     */
+    public ProductEntry(StockController productListingVar) {
         this.productListingVar = productListingVar;
         setTitle("Add a New Product");
         pnlCommand = new JPanel();
         pnlDisplay = new JPanel();
-        pnlDisplay.add(new JLabel("Product Name:")); 
+        pnlDisplay.add(new JLabel("Product Name:"));
         txtName = new JTextField(20);
         pnlDisplay.add(txtName);
         pnlDisplay.add(new JLabel("Quantity:"));
@@ -38,13 +44,13 @@ public class ProductEntry extends JFrame
         pnlDisplay.add(new JLabel("Price:"));
         txtPrice = new JTextField(20);
         pnlDisplay.add(txtPrice);
-        pnlDisplay.setLayout(new GridLayout(5,5));
-        pnlDisplay.add(new JLabel("Supplier:")); 
+        pnlDisplay.setLayout(new GridLayout(5, 5));
+        pnlDisplay.add(new JLabel("Supplier:"));
         txtSupplier = new JTextField(20);
         pnlDisplay.add(txtSupplier);
-       
-        cmdSave      = new JButton("Save");
-        cmdClose   = new JButton("Close");
+
+        cmdSave = new JButton("Save");
+        cmdClose = new JButton("Close");
 
         cmdClose.addActionListener(new ButtonListener());
         cmdSave.addActionListener(new ButtonListener());
@@ -58,34 +64,33 @@ public class ProductEntry extends JFrame
 
     }
 
-    public ProductEntry(StockController productListingVar, Product p, int ID)
-    {
+    public ProductEntry(StockController productListingVar, Product p, int ID) {
         this.productListingVar = productListingVar;
         editP = p;
         editID = ID;
         setTitle("Editing a Product");
         pnlCommand = new JPanel();
         pnlDisplay = new JPanel();
-        pnlDisplay.add(new JLabel("Product Name:")); 
+        pnlDisplay.add(new JLabel("Product Name:"));
         txtName = new JTextField(20);
         txtName.setText(p.getName());
         pnlDisplay.add(txtName);
         pnlDisplay.add(new JLabel("Quantity:"));
         txtQuantity = new JTextField(3);
-        txtQuantity.setText(""+p.getQuantity());
+        txtQuantity.setText("" + p.getQuantity());
         pnlDisplay.add(txtQuantity);
         pnlDisplay.add(new JLabel("Price:"));
         txtPrice = new JTextField(20);
-        txtPrice.setText(""+p.getPrice());
+        txtPrice.setText("" + p.getPrice());
         pnlDisplay.add(txtPrice);
-        pnlDisplay.setLayout(new GridLayout(5,5));
-        pnlDisplay.add(new JLabel("Supplier:")); 
+        pnlDisplay.setLayout(new GridLayout(5, 5));
+        pnlDisplay.add(new JLabel("Supplier:"));
         txtSupplier = new JTextField(20);
         txtSupplier.setText(p.getSupplier());
         pnlDisplay.add(txtSupplier);
-       
-        cmdSave      = new JButton("Save");
-        cmdClose   = new JButton("Close");
+
+        cmdSave = new JButton("Save");
+        cmdClose = new JButton("Close");
 
         cmdClose.addActionListener(new ButtonListener());
         cmdSave.addActionListener(new ButtonListener());
@@ -100,7 +105,7 @@ public class ProductEntry extends JFrame
     }
 
     /** listens for actions from button presses */
-    private class ButtonListener implements ActionListener {
+    public class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == cmdClose) // if button click is close. it closes
                 setVisible(false);
@@ -110,8 +115,7 @@ public class ProductEntry extends JFrame
                 String[] checkName = txtName.getText().split(" ");
                 int checkQuantity = 0;
                 double checkPrice = 0;
-                try
-                {
+                try {
                     checkQuantity = Integer.parseInt(txtQuantity.getText());
                     checkPrice = Double.parseDouble(txtPrice.getText());
 
@@ -120,20 +124,20 @@ public class ProductEntry extends JFrame
                     JOptionPane.showMessageDialog(frame, "Make sure your quantity or price is a number!");
                     return;
 
-                    //System.out.println("Make sure your quanity or price is a number!");
+                    // System.out.println("Make sure your quanity or price is a number!");
                 }
-                if((checkName.length == 1 && checkQuantity != 0))
-                {
+                if ((checkName.length == 1 && checkQuantity != 0)) {
                     Product p = new Product(txtName.getText(), checkQuantity, checkPrice, txtSupplier.getText());
                     if (editP == null)
-                    productListingVar.addProduct(p);
+                        productListingVar.addProduct(p);
                     else
-                    productListingVar.editProduct(p, editID);
-                    
+                        productListingVar.editProduct(p, editID);
+
                     setVisible(false);
                 } else {
                     JFrame frame = new JFrame();
-                    JOptionPane.showMessageDialog(frame, "Ensure your quantity is not zero and that your product name does not contain spaces!");
+                    JOptionPane.showMessageDialog(frame,
+                            "Ensure your quantity is not zero and that your product name does not contain spaces!");
                     return;
                     // System.out.println("Make sure your name has a space bro!");
                 }

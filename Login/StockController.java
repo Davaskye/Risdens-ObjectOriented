@@ -1,4 +1,4 @@
-//package proj;
+package Login;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +23,9 @@ import javax.swing.table.DefaultTableModel;
 //import java.util.Comparator;
 //import java.util.Collections;
 //import java.awt.Color;
+
+import Logs.ChangelogScreen;
+import ProductManager.*;
 
 import java.text.SimpleDateFormat; //used for date formatting
 import java.util.Date; //used to calculate current date
@@ -155,7 +158,8 @@ public class StockController extends JPanel {
         String[] date = dateString.split(" ");
         try {
             PrintStream writer = new PrintStream(new FileOutputStream("changelog.dat", true));
-            writer.println(p.getName() + " " + p.getQuantity()+ " " + p.getPrice() + " " + change + " " + date[0] + " " + date[1]);
+            writer.println(p.getName() + " " + p.getQuantity() + " " + p.getPrice() + " " + change + " " + date[0] + " "
+                    + date[1]);
             writer.close();
         } catch (IOException error) {
             JFrame popupError = new JFrame();

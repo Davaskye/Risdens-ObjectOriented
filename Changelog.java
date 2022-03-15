@@ -46,9 +46,9 @@ public class Changelog {
     // return name;
     // }
 
-    public static void main(String[] args) {
-        Changelog test = new Changelog("date", "time", "bleach", "10", "150");
-        System.out.println(test.getProductName());
-    }
+    // public static void main(String[] args) {
+    // Changelog test = new Changelog("date", "time", "bleach", "10", "150");
+    // System.out.println(test.getProductName());
+    // }
 
 }

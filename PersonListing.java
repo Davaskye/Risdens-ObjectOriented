@@ -27,25 +27,23 @@ import java.text.SimpleDateFormat; //used for date formatting
 import java.util.Date; //used to calculate current date
 
 /** Creates window with containment */
-public class PersonListing extends JPanel {
-    private JButton     cmdAddPerson;
+public class ProductListing extends JPanel {
+    private JButton     cmdAddProduct;
     private JButton     cmdClose;
-    private JButton     cmdSortBudget;
-    private JButton     cmdSortName;
-    private JButton     cmdEditPerson;
-    private JButton     cmdRemovePerson;
+    private JButton     cmdEditProduct;
+    private JButton     cmdRemoveProduct;
     private JButton     cmdChangelog;
   
     private JPanel      pnlCommand;
     //private JPanel      pnlDisplay;
-    private ArrayList<Person> plist; //promoter/person listing
-    private PersonListing thisForm;
+    private ArrayList<Product> plist; //promoter/Product listing
+    private ProductListing thisForm;
     private  JScrollPane scrollPane;
 
     private JTable table;
     private DefaultTableModel model;
 
-    public PersonListing() {
+    public ProductListing() {
         super(new GridLayout(2,1));
         thisForm = this;
         
@@ -53,7 +51,7 @@ public class PersonListing extends JPanel {
         pnlCommand = new JPanel();
         //pnlDisplay = new JPanel();
 
-        plist= loadPersons("person.dat");
+        plist= loadProducts("Product.dat");
         String[] columnNames=  {"ID",
                 "First Name",
                 "Last Name",
@@ -74,26 +72,26 @@ public class PersonListing extends JPanel {
        //pnlDisplay.setBackground(Color.ORANGE); //sets color of top window
         
 
-        cmdAddPerson  = new JButton("Add Promoter");
-        cmdEditPerson = new JButton("Edit Promoter");
-        cmdRemovePerson = new JButton("Remove Promoter");
+        cmdAddProduct  = new JButton("Add Promoter");
+        cmdEditProduct = new JButton("Edit Promoter");
+        cmdRemoveProduct = new JButton("Remove Promoter");
         cmdSortBudget  = new JButton("Sort by Budget");
         cmdSortName = new JButton("Sort by First Name");
         cmdChangelog = new JButton("Changelog");
         cmdClose   = new JButton("Close");
 
-        cmdAddPerson.addActionListener(new AddPersonListener());
-        cmdEditPerson.addActionListener(new EditPersonListener());
-        cmdRemovePerson.addActionListener(new RemovePersonListener());
+        cmdAddProduct.addActionListener(new AddProductListener());
+        cmdEditProduct.addActionListener(new EditProductListener());
+        cmdRemoveProduct.addActionListener(new RemoveProductListener());
         cmdSortName.addActionListener(new SortNameListener());
         cmdSortBudget.addActionListener(new SortButtonListener());
         cmdChangelog.addActionListener(new ChangelogListener());
         cmdClose.addActionListener(new CloseButtonListener());
         
         
-        pnlCommand.add(cmdAddPerson);
-        pnlCommand.add(cmdEditPerson);
-        pnlCommand.add(cmdRemovePerson);
+        pnlCommand.add(cmdAddProduct);
+        pnlCommand.add(cmdEditProduct);
+        pnlCommand.add(cmdRemoveProduct);
         pnlCommand.add(cmdSortBudget);
         pnlCommand.add(cmdSortName);
         pnlCommand.add(cmdChangelog);
@@ -102,7 +100,7 @@ public class PersonListing extends JPanel {
         add(pnlCommand);
     }
 
-    private void showTable(ArrayList<Person> plist)
+    private void showTable(ArrayList<Product> plist)
     {
         int i = 0;
        while (plist.size()>i)
@@ -113,7 +111,7 @@ public class PersonListing extends JPanel {
 
     }
 
-    private void addToTable(Person p)
+    private void addToTable(Product p)
     {
         String[] name= p.getName().split(" ");
         String[] item={""+p.getId(),name[0],name[1],""+ p.getAge(),""+p.getBudget()};
@@ -123,11 +121,11 @@ public class PersonListing extends JPanel {
 
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("Promoter Manager");
+        JFrame frame = new JFrame("Product Manager");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        PersonListing newContentPane = new PersonListing();
+        ProductListing newContentPane = new ProductListing();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 
@@ -151,8 +149,8 @@ public class PersonListing extends JPanel {
     {
         try
         {
-            PrintStream writer=new PrintStream(new FileOutputStream("person.dat"));
-            for (Person p : plist) 
+            PrintStream writer=new PrintStream(new FileOutputStream("Product.dat"));
+            for (Product p : plist) 
             {
                 writer.println(p.getName()+ " "+ p.getAge() + " "+ p.getBudget());
             }
@@ -165,7 +163,7 @@ public class PersonListing extends JPanel {
         }      
 
     }
-    public void updateChangelog(Person p, String change)
+    public void updateChangelog(Product p, String change)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dateString = formatter.format(new Date());
@@ -185,7 +183,7 @@ public class PersonListing extends JPanel {
     }
 
 
-    public void addPerson(Person p)
+    public void addProduct(Product p)
     {
         plist.add(p);
         addToTable(p);
@@ -194,22 +192,22 @@ public class PersonListing extends JPanel {
         
     }
 
-    public void editPerson(Person p, int ID)
+    public void editProduct(Product p, int ID)
     {
         plist.set(ID, p);
         model.setRowCount(0);
-        for(Person person: plist)
+        for(Product Product: plist)
         {
-            addToTable(person);
+            addToTable(Product);
         }
         updateRecord();
         updateChangelog(p, "Edited");
     }
-    //This loadPersons section loads the file with the promoters to add them to the display
-    private ArrayList<Person> loadPersons(String pfile)
+    //This loadProducts section loads the file with the promoters to add them to the display
+    private ArrayList<Product> loadProducts(String pfile)
     {
         Scanner pscan = null;
-        ArrayList<Person> plist = new ArrayList<Person>();
+        ArrayList<Product> plist = new ArrayList<Product>();
         try
         {
             pscan  = new Scanner(new File(pfile));
@@ -220,7 +218,7 @@ public class PersonListing extends JPanel {
                 int age = Integer.parseInt(nextLine[2]);
                 double budget = Double.parseDouble(nextLine[3]);
                
-                Person p = new Person(name, age, budget);
+                Product p = new Product(name, age, budget);
                 plist.add(p);
             }
 
@@ -244,22 +242,22 @@ public class PersonListing extends JPanel {
 
     }
 
-    private class AddPersonListener implements ActionListener
+    private class AddProductListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
-            new PersonEntry(thisForm);
+            new ProductEntry(thisForm);
         }
 
     }
 
-    private class EditPersonListener implements ActionListener
+    private class EditProductListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
             int ID = -1;
             JFrame popup=new JFrame();
-            String input = JOptionPane.showInputDialog(popup,"Enter the ID of person to be edited."); //brings up dialog box to enter ID.
+            String input = JOptionPane.showInputDialog(popup,"Enter the ID of Product to be edited."); //brings up dialog box to enter ID.
             if (input == null)
             {
                 return;
@@ -282,19 +280,19 @@ public class PersonListing extends JPanel {
                 JOptionPane.showMessageDialog(errorMessage, "ID number not found!");
                 return;
             }
-            Person p = thisForm.plist.get(ID);
-            new PersonEntry(thisForm, p, ID);
+            Product p = thisForm.plist.get(ID);
+            new ProductEntry(thisForm, p, ID);
         }
     }
 
-    private class RemovePersonListener implements ActionListener
+    private class RemoveProductListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {
             int ID;
 
             JFrame popup=new JFrame();
-            String input = JOptionPane.showInputDialog(popup,"Enter ID of person to be removed");
+            String input = JOptionPane.showInputDialog(popup,"Enter ID of Product to be removed");
             if (input == null)
             {
                 return;
@@ -318,9 +316,9 @@ public class PersonListing extends JPanel {
                 return;
             }
 
-            Person p = thisForm.plist.get(ID);
+            Product p = thisForm.plist.get(ID);
             JFrame f = new JFrame();
-            int response = JOptionPane.showConfirmDialog(f, "Do you want to remove this person?\nName: "+ p.getName() + 
+            int response = JOptionPane.showConfirmDialog(f, "Do you want to remove this Product?\nName: "+ p.getName() + 
                                                         "\nAge: "+p.getAge()+ 
                                                         "\nBudget: "+p.getBudget(),
                                                         "Choose one",JOptionPane.YES_NO_OPTION);
@@ -328,9 +326,9 @@ public class PersonListing extends JPanel {
             {
                 thisForm.plist.remove(ID);
                 model.setRowCount(0);
-                for(Person person: plist)
+                for(Product Product: plist)
                 {
-                    addToTable(person);
+                    addToTable(Product);
                 }
                 updateRecord();
                 updateChangelog(p, "Removed");
@@ -372,7 +370,5 @@ public class PersonListing extends JPanel {
                 addToTable(p);
             }
         }
-
     }
-
 }

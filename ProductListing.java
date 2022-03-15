@@ -53,7 +53,7 @@ public class ProductListing extends JPanel {
 
         plist = loadProducts("Product.dat");
         String[] columnNames = { "ID",
-                "Date",
+                "Supplier",
                 "Product Name",
                 "Quantity",
                 "Cost" };
@@ -103,8 +103,7 @@ public class ProductListing extends JPanel {
     }
 
     private void addToTable(Product p) {
-        String[] name = p.getName().split(" ");
-        String[] item = { "" + p.getSupplier(), name[0], name[1], "" + p.getQuantity(), "" + p.getPrice() };
+        String[] item = { "" + p.getID(), p.getSupplier(), p.getName(), "" + p.getQuantity(), "" + p.getPrice() };
 
         model.addRow(item);
     }
@@ -140,7 +139,7 @@ public class ProductListing extends JPanel {
         try {
             PrintStream writer = new PrintStream(new FileOutputStream("Product.dat"));
             for (Product p : plist) {
-                writer.println(p.getName() + " " + p.getQuantity() + " " + p.getPrice());
+                writer.println(p.getSupplier() + " " + p.getName() + " " + p.getQuantity() + " " + p.getPrice());
             }
             writer.close();
         } catch (IOException error) {
@@ -156,7 +155,7 @@ public class ProductListing extends JPanel {
         String[] date = dateString.split(" ");
         try {
             PrintStream writer = new PrintStream(new FileOutputStream("changelog.dat", true));
-            writer.println(p.getName() + " " + change + " " + date[0] + " " + date[1]);
+            writer.println(p.getName() + " " + p.getQuantity()+ " " + p.getPrice() + " " + change + " " + date[0] + " " + date[1]);
             writer.close();
         } catch (IOException error) {
             JFrame popupError = new JFrame();
@@ -192,10 +191,10 @@ public class ProductListing extends JPanel {
             pscan = new Scanner(new File(pfile));
             while (pscan.hasNext()) {
                 String[] nextLine = pscan.nextLine().split(" ");
-                String name = nextLine[0] + " " + nextLine[1];
-                String supplier = nextLine[0] + " " + nextLine[2];
-                int quantity = Integer.parseInt(nextLine[3]);
-                double price = Double.parseDouble(nextLine[4]);
+                String name = nextLine[1];
+                String supplier = nextLine[0];
+                int quantity = Integer.parseInt(nextLine[2]);
+                double price = Double.parseDouble(nextLine[3]);
 
                 Product p = new Product(name, quantity, price, supplier);
                 plist.add(p);

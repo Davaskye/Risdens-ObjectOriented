@@ -38,7 +38,7 @@ public class ProductEntry extends JFrame
         pnlDisplay.add(new JLabel("Price:"));
         txtPrice = new JTextField(20);
         pnlDisplay.add(txtPrice);
-        pnlDisplay.setLayout(new GridLayout(3,4));
+        pnlDisplay.setLayout(new GridLayout(5,5));
         pnlDisplay.add(new JLabel("Supplier:")); 
         txtSupplier = new JTextField(20);
         pnlDisplay.add(txtSupplier);
@@ -78,7 +78,7 @@ public class ProductEntry extends JFrame
         txtPrice = new JTextField(20);
         txtPrice.setText(""+p.getPrice());
         pnlDisplay.add(txtPrice);
-        pnlDisplay.setLayout(new GridLayout(3,4));
+        pnlDisplay.setLayout(new GridLayout(5,5));
         pnlDisplay.add(new JLabel("Supplier:")); 
         txtSupplier = new JTextField(20);
         txtSupplier.setText(p.getSupplier());
@@ -108,7 +108,6 @@ public class ProductEntry extends JFrame
             {
 
                 String[] checkName = txtName.getText().split(" ");
-                String[] checkSupplier = txtSupplier.getText().split(" ");
                 int checkQuantity = 0;
                 double checkPrice = 0;
                 try
@@ -123,9 +122,9 @@ public class ProductEntry extends JFrame
 
                     //System.out.println("Make sure your quanity or price is a number!");
                 }
-                if((checkName.length == 2)&&(checkQuantity != 0))
+                if((checkName.length == 1 && checkQuantity != 0))
                 {
-                    Product p = new Product(txtName.getText(), checkQuantity, checkPrice, txtSupplier.getSupplier());
+                    Product p = new Product(txtName.getText(), checkQuantity, checkPrice, txtSupplier.getText());
                     if (editP == null)
                     productListingVar.addProduct(p);
                     else
@@ -134,7 +133,7 @@ public class ProductEntry extends JFrame
                     setVisible(false);
                 } else {
                     JFrame frame = new JFrame();
-                    JOptionPane.showMessageDialog(frame, "Make sure your name has a space!");
+                    JOptionPane.showMessageDialog(frame, "Ensure your quantity is not zero and that your product name does not contain spaces!");
                     return;
                     // System.out.println("Make sure your name has a space bro!");
                 }

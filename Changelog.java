@@ -6,14 +6,16 @@ public class Changelog {
     private String productname;
     private String quantity;
     private String cost;
+    private String change;
 
-    public Changelog(String date, String time, String productname, String quantity, String cost) {
+    public Changelog(String date, String time, String productname, String quantity, String cost, String change) {
 
         this.date = date;
         this.time = time;
         this.productname = productname;
         this.quantity = quantity;
         this.cost = cost;
+        this.change = change;
     }
 
     public String getDate() {
@@ -36,10 +38,10 @@ public class Changelog {
         return cost;
     }
 
-    // public String getChange()
-    // {
-    // return change;
-    // }
+    public String getChange()
+    {
+        return change;
+    }
 
     // public String getName()
     // {

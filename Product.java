@@ -7,6 +7,9 @@ public class Product implements Comparable<Product>
     private String productName;
 	private int quantity;
 	private String supplier;
+    private int id;
+
+    private static int nextId = 0;
 
     public Product(String productName, int quantity, double price, String supplier)
     {
@@ -14,6 +17,8 @@ public class Product implements Comparable<Product>
 		this.quantity = quantity;
         this.price = price;
         this.supplier = supplier;
+        this.id = nextId;
+        nextId++;
     }
 
     public String getName()
@@ -34,6 +39,11 @@ public class Product implements Comparable<Product>
     public String getSupplier()
     {
         return supplier;
+    }
+
+    public int getID()
+    {
+        return id;
     }
 
     public void setProductName(String productName)

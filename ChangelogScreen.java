@@ -35,8 +35,9 @@ public class ChangelogScreen extends JFrame {
 
         String[] columnNames = { "Date Changed",
                 "Time Changed",
-                "First Name",
-                "Last Name",
+                "Product Name",
+                "Product Quantity",
+                "Product Price",
                 "Status" };
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
@@ -71,9 +72,9 @@ public class ChangelogScreen extends JFrame {
     }
 
     private void addToTable(Changelog c) {
-        String[] name = c.getName().split(" "); // The constructor for Changelog has changed, therefore this needs to
+        //String[] name = c.getProductName().split(" "); // The constructor for Changelog has changed, therefore this needs to
                                                 // reflect that
-        String[] item = { c.getDate(), c.getTime(), name[0], name[1], c.getChange() }; // Same issue for this error ^^^
+        String[] item = { c.getDate(), c.getTime(), c.getProductName(), c.getQuantity(), c.getCost(), c.getChange() }; // Same issue for this error ^^^
 
         model.addRow(item);
     }
@@ -85,12 +86,14 @@ public class ChangelogScreen extends JFrame {
             cscan = new Scanner(new File(cfile));
             while (cscan.hasNext()) {
                 String[] nextLine = cscan.nextLine().split(" ");
-                String promoterInfo = nextLine[0] + " " + nextLine[1];
-                String whatHappened = nextLine[2];
-                String changeDate = nextLine[3];
-                String changeTime = nextLine[4];
-
-                Changelog c = new Changelog(changeDate, changeTime, promoterInfo, whatHappened); // The constructor for
+                String productName = nextLine[0];
+                String productQuantity = nextLine[1];
+                String productPrice = nextLine[2];
+                String whatChanged = nextLine[3];
+                String changeDate = nextLine[4];
+                String changeTime = nextLine[5];
+                
+                Changelog c = new Changelog(changeDate, changeTime, productName, productQuantity, productPrice, whatChanged); // The constructor for
                                                                                                  // Changelog has
                                                                                                  // changed, therefore
                                                                                                  // this needs to

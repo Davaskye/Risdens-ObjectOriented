@@ -1,4 +1,4 @@
-package proj;
+// package proj;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,8 +71,9 @@ public class ChangelogScreen extends JFrame {
     }
 
     private void addToTable(Changelog c) {
-        String[] name = c.getName().split(" ");
-        String[] item = { c.getDate(), c.getTime(), name[0], name[1], c.getChange() };
+        String[] name = c.getName().split(" "); // The constructor for Changelog has changed, therefore this needs to
+                                                // reflect that
+        String[] item = { c.getDate(), c.getTime(), name[0], name[1], c.getChange() }; // Same issue for this error ^^^
 
         model.addRow(item);
     }
@@ -89,7 +90,11 @@ public class ChangelogScreen extends JFrame {
                 String changeDate = nextLine[3];
                 String changeTime = nextLine[4];
 
-                Changelog c = new Changelog(changeDate, changeTime, promoterInfo, whatHappened);
+                Changelog c = new Changelog(changeDate, changeTime, promoterInfo, whatHappened); // The constructor for
+                                                                                                 // Changelog has
+                                                                                                 // changed, therefore
+                                                                                                 // this needs to
+                                                                                                 // reflect that
                 clist.add(c);
             }
 

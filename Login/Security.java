@@ -4,7 +4,10 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import ProductManager.StockController;
 import ProductManager.ProductEntry.*;
+import ProductManager.StockController.*;
 
 public class Security extends JFrame {
 
@@ -56,7 +59,14 @@ public class Security extends JFrame {
     }
 
     public static void main(String[] args) {
-        Security test = new Security();
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI.
+        // javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        // public void run() {
+
+        // }
+        // });
+        StockController.createAndShowGUI();
 
     }
 

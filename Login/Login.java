@@ -33,7 +33,7 @@ public class Login {
 
         try {
             String cred[];
-            File file = new File("Users.txt");
+            File file = new File("Users.dat");
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
                 String auth = (String) scan.nextLine();

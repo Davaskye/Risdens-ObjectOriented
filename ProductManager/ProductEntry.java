@@ -4,8 +4,6 @@ package ProductManager;
 import java.awt.*;
 import javax.swing.*;
 
-import Login.StockController;
-
 import java.awt.event.ActionListener;
 //import java.io.IOError;
 import java.awt.event.ActionEvent;

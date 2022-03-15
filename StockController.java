@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat; //used for date formatting
 import java.util.Date; //used to calculate current date
 
 /** Creates window with containment */
-public class ProductListing extends JPanel {
+public class StockController extends JPanel {
     private JButton cmdAddProduct;
     private JButton cmdClose;
     private JButton cmdEditProduct;
@@ -38,13 +38,13 @@ public class ProductListing extends JPanel {
     private JPanel pnlCommand;
     // private JPanel pnlDisplay;
     private ArrayList<Product> plist; // Product/Product listing
-    private ProductListing thisForm;
+    private StockController thisForm;
     private JScrollPane scrollPane;
 
     private JTable table;
     private DefaultTableModel model;
 
-    public ProductListing() {
+    public StockController() {
         super(new GridLayout(2, 1));
         thisForm = this;
 
@@ -114,7 +114,7 @@ public class ProductListing extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create and set up the content pane.
-        ProductListing newContentPane = new ProductListing();
+        StockController newContentPane = new StockController();
         newContentPane.setOpaque(true); // content panes must be opaque
         frame.setContentPane(newContentPane);
 

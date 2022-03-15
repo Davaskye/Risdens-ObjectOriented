@@ -19,11 +19,11 @@ public class ProductEntry extends JFrame
 
     private JPanel      pnlCommand;
     private JPanel      pnlDisplay;
-    private ProductListing productListingVar;
+    private StockController productListingVar;
     private Product editP;
     private int editID;
-  /** @param ProductListing Lets you enter a product listing and sets up the panels and buttons */
-    public ProductEntry(ProductListing productListingVar)
+  /** @param StockController Lets you enter a product listing and sets up the panels and buttons */
+    public ProductEntry(StockController productListingVar)
     {
         this.productListingVar = productListingVar;
         setTitle("Add a New Product");
@@ -58,7 +58,7 @@ public class ProductEntry extends JFrame
 
     }
 
-    public ProductEntry(ProductListing productListingVar, Product p, int ID)
+    public ProductEntry(StockController productListingVar, Product p, int ID)
     {
         this.productListingVar = productListingVar;
         editP = p;

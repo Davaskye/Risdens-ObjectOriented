@@ -40,17 +40,18 @@ public class Login {
                 cred = auth.split(" ", 0);
                 if (cred[0].compareTo(getUser()) == 0) {
                     if (cred[1].compareTo(getPass()) == 0) {
-                        return 0;
+                        return 0; // Both password and username are correct
                     } else {
-                        return 1;
+                        return 1; // Username is correct but password is incorrect- gives the chance to give error
+                                  // message for password
                     }
                 }
             }
-            return 2;
+            return 2; // Both password and username are incorrect
         } catch (Exception e) {
             System.out.println("There was an error \n");
             System.out.println(e);
-            return 999;
+            return 999; // An error occured where file is not found are file path is incorrect
         }
 
     }

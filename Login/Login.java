@@ -1,65 +1,96 @@
 package Login;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.util.Scanner;
-import java.util.Arrays;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Login {
+import ProductManager.StockController;
 
-    private String username;
-    private String password;
-    private String userId;
+public class Login extends JFrame {
 
-    public Login(String username, String password) {
-        this.username = username;
-        this.password = password;
-        // this.userId =
+    private JTextField txtName; // product name
+    private JTextField txtPassword; // quantity
+    private JButton cmdLogin;
+    private JButton cmdClose;
+
+    private JPanel pnlCommand;
+    private JPanel pnlDisplay;
+
+    public Login() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pnlCommand = new JPanel();
+        pnlDisplay = new JPanel();
+        pnlDisplay.add(new JLabel("Username:"));
+        txtName = new JTextField(20);
+        pnlDisplay.add(txtName);
+        pnlDisplay.add(new JLabel("Password:"));
+        txtPassword = new JTextField(3);
+        pnlDisplay.add(txtPassword);
+        pnlDisplay.setLayout(new GridLayout(2, 3));
+
+        cmdLogin = new JButton("Login");
+        cmdClose = new JButton("Close");
+
+        cmdClose.addActionListener(new Listener());
+        cmdLogin.addActionListener(new Listener());
+
+        pnlCommand.add(cmdLogin);
+        pnlCommand.add(cmdClose);
+        add(pnlDisplay, BorderLayout.CENTER);
+        add(pnlCommand, BorderLayout.SOUTH);
+        pack();
+        setVisible(true);
+
     }
 
-    public String getUser() {
-        return this.username;
-    }
+    public class Listener implements ActionListener {
 
-    public String getPass() {
-        return this.password;
-    }
+        public void actionPerformed(ActionEvent e) {
 
-    public String getId() {
-        return this.userId;
-    }
-
-    public int isAuthorised() {
-
-        try {
-            String cred[];
-            File file = new File("Users.dat");
-            Scanner scan = new Scanner(file);
-            while (scan.hasNextLine()) {
-                String auth = (String) scan.nextLine();
-                cred = auth.split(" ", 0);
-                if (cred[0].compareTo(getUser()) == 0) {
-                    if (cred[1].compareTo(getPass()) == 0) {
-                        return 0; // Both password and username are correct
-                    } else {
-                        return 1; // Username is correct but password is incorrect- gives the chance to give error
-                                  // message for password
-                    }
+            if (e.getSource() == cmdClose) {
+                System.exit(0);
+            } else if (e.getSource() == cmdLogin) {
+                String username = txtName.getText();
+                String password = txtPassword.getText();
+                Security login = new Security(username, password);
+                int auth = login.isAuthorised();
+                if (runChecks(auth)) {
+                    setVisible(false);
+                    StockController.createAndShowGUI();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Your username or password is incorrect");
                 }
+
             }
-            return 2; // Both password and username are incorrect
-        } catch (Exception e) {
-            System.out.println("There was an error \n");
-            System.out.println(e);
-            return 999; // An error occured where file is not found are file path is incorrect
+
+        }
+
+    }
+
+    public Boolean runChecks(int authentificationNumber) {
+
+        if (authentificationNumber == 0) {
+            return true;
+        } else if (authentificationNumber == 1) {
+            return false;
+        } else if (authentificationNumber == 2) {
+            return false;
+        } else {
+            return false;
         }
 
     }
 
     public static void main(String[] args) {
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI.
+        // javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        // public void run() {
 
-        Login lg = new Login("Romario", "Woah");
-        System.out.println(lg.isAuthorised());
+        // }
+        // });
+        Login auth = new Login();
     }
 
 }

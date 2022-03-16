@@ -53,13 +53,13 @@ public class Security {
             System.out.println(e);
             return 999; // An error occured where file is not found are file path is incorrect
         }
-
+    
     }
 
-    public static void main(String[] args) {
+    // public static void main(String[] args) {
 
-        Security lg = new Security("Romario", "Woah");
-        System.out.println(lg.isAuthorised());
-    }
+    //     Security lg = new Security("Romario", "Woah");
+    //     System.out.println(lg.isAuthorised());
+    // }
 
 }

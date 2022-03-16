@@ -90,7 +90,7 @@ public class Login extends JFrame {
 
         // }
         // });
-        Login auth = new Login();
+        new Login();
     }
 
 }

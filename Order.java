@@ -58,4 +58,9 @@ public class Order {
     // in detail
     // If it is explained, you can go ahead and work on it as you like
 
+    public String toString() {
+        return (getName() + "\t" + getTele() + "\t" + getAddress() + "\t" + getDeliveryAdd() + "\t" + getTOD() + "\t" + getProduct());
+    }
+
 }
+

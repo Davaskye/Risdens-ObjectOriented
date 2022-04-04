@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 
 // This class is used to validate data that has been inputted by the user.
+// Should be done by Davaskye
 public class DataValidation {
 
     public String input;

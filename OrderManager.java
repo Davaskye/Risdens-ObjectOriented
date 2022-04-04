@@ -1,15 +1,17 @@
- 
+import ProductManager.Product;
+
 public final class OrderManager {
 
     public Order order;
     public int itemId;
 
-    public OrderManager() {}
+    public OrderManager() {
+    }
 
     public OrderManager(Order order, int itemId) {
         this.setOrder(order);
         this.setItemId(itemId);
-    } 
+    }
 
     private Object getOrderId() {
         return null;
@@ -36,11 +38,11 @@ public final class OrderManager {
         this.itemId = itemId;
     }
 
-
     @Override
     public int hashCode() {
         return ((this.getOrder() == null
-                ? 0 : this.getOrder().hashCode())
+                ? 0
+                : this.getOrder().hashCode())
                 ^ ((int) this.getItemId()));
     }
 
@@ -54,8 +56,16 @@ public final class OrderManager {
         }
         OrderManager other = (OrderManager) otherOb;
         return ((this.getOrder() == null
-                ? other.getOrder() == null : this.getOrderId()
-                .equals(other.getOrder())) 
+                ? other.getOrder() == null
+                : this.getOrderId()
+                        .equals(other.getOrder()))
                 && (this.getItemId() == other.getItemId()));
-}
+    }
+
+    public static void main(String[] args) {
+        Product product = new Product("Bleach", 10, 100, "Mr.Bean");
+        Order order = new Order("Al", "12345678", "Hellsing Ultimate", "Hellsing Ave.", "12:00", product);
+        OrderManager om = new OrderManager(null, 5678);
+        System.out.println(om.hashCode());
+    }
 }

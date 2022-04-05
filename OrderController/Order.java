@@ -1,3 +1,5 @@
+package OrderController;
+
 import ProductManager.Product;
 
 // So at the time this class was created, it was unclear of the exact details this class should function under
@@ -59,8 +61,8 @@ public class Order {
     // If it is explained, you can go ahead and work on it as you like
 
     public String toString() {
-        return (getName() + "\t" + getTele() + "\t" + getAddress() + "\t" + getDeliveryAdd() + "\t" + getTOD() + "\t" + getProduct());
+        return (getName() + "\t" + getTele() + "\t" + getAddress() + "\t" + getDeliveryAdd() + "\t" + getTOD() + "\t"
+                + getProduct());
     }
 
 }
-

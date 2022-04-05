@@ -1,3 +1,5 @@
+package OrderController;
+
 import ProductManager.Product;
 
 public final class OrderManager {
@@ -6,6 +8,7 @@ public final class OrderManager {
     public int itemId;
 
     public OrderManager() {
+
     }
 
     public OrderManager(Order order, int itemId) {
@@ -62,10 +65,11 @@ public final class OrderManager {
                 && (this.getItemId() == other.getItemId()));
     }
 
-    public static void main(String[] args) {
-        Product product = new Product("Bleach", 10, 100, "Mr.Bean");
-        Order order = new Order("Al", "12345678", "Hellsing Ultimate", "Hellsing Ave.", "12:00", product);
-        OrderManager om = new OrderManager(null, 5678);
-        System.out.println(om.hashCode());
-    }
+    // public static void main(String[] args) {
+    // Product product = new Product("Bleach", 10, 100, "Mr.Bean");
+    // Order order = new Order("Al", "12345678", "Hellsing Ultimate", "Hellsing
+    // Ave.", "12:00", product);
+    // OrderManager om = new OrderManager(null, 5678);
+    // System.out.println(om.hashCode());
+    // }
 }

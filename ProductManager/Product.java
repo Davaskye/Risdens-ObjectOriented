@@ -49,8 +49,11 @@ public class Product implements Comparable<Product> {
         this.price = price;
     }
 
+    // changed this function to have one space between words so that OrdersEntry can
+    // print them to the file without too much effort and the code can run
+    // efficiently.
     public String toString() {
-        return (getName() + "\t" + getQuantity() + "\t" + getPrice() + "\t" + getSupplier());
+        return (getName() + " " + getQuantity() + " " + getPrice() + " " + getSupplier());
     }
 
     public int compareTo(Product other) {

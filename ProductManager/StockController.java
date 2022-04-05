@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Logs.ChangelogScreen;
 import ProductManager.*;
+import OrderController.*;
 
 import java.text.SimpleDateFormat; //used for date formatting
 import java.util.Date; //used to calculate current date
@@ -37,6 +38,7 @@ public class StockController extends JPanel {
     private JButton cmdEditProduct;
     private JButton cmdRemoveProduct;
     private JButton cmdChangelog;
+    private JButton cmdOrder; // This is where the new order button is instantiated
 
     private JPanel pnlCommand;
     // private JPanel pnlDisplay;
@@ -79,6 +81,7 @@ public class StockController extends JPanel {
         cmdEditProduct = new JButton("Edit Product");
         cmdRemoveProduct = new JButton("Remove Product");
         cmdChangelog = new JButton("Changelog");
+        cmdOrder = new JButton("Create Order"); // Creates an Order button to on main interface
         cmdClose = new JButton("Close");
 
         cmdAddProduct.addActionListener(new AddProductListener());
@@ -86,11 +89,14 @@ public class StockController extends JPanel {
         cmdRemoveProduct.addActionListener(new RemoveProductListener());
         cmdChangelog.addActionListener(new ChangelogListener());
         cmdClose.addActionListener(new CloseButtonListener());
+        cmdOrder.addActionListener(new OrderButtonListener()); // Adds action listener to Order button to open new
+                                                               // Create Order Interface.
 
         pnlCommand.add(cmdAddProduct);
         pnlCommand.add(cmdEditProduct);
         pnlCommand.add(cmdRemoveProduct);
         pnlCommand.add(cmdChangelog);
+        pnlCommand.add(cmdOrder);
         pnlCommand.add(cmdClose);
 
         add(pnlCommand);
@@ -205,6 +211,14 @@ public class StockController extends JPanel {
     private class CloseButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
+        }
+
+    }
+
+    // Newly added ActionListener for creating orders ##########
+    private class OrderButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            new OrderUserInterface();
         }
 
     }

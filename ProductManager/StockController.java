@@ -56,7 +56,7 @@ public class StockController extends JPanel {
         pnlCommand = new JPanel();
         // pnlDisplay = new JPanel();
 
-        plist = loadProducts("Product.dat");
+        plist = loadProducts("Product.txt");
         String[] columnNames = { "ID",
                 "Supplier",
                 "Product Name",
@@ -136,7 +136,7 @@ public class StockController extends JPanel {
     // added/edited/deleted
     public void updateRecord() {
         try {
-            PrintStream writer = new PrintStream(new FileOutputStream("Product.dat"));
+            PrintStream writer = new PrintStream(new FileOutputStream("Product.txt"));
             for (Product p : plist) {
                 writer.println(p.getSupplier() + " " + p.getName() + " " + p.getQuantity() + " " + p.getPrice());
             }
@@ -153,7 +153,7 @@ public class StockController extends JPanel {
         String dateString = formatter.format(new Date());
         String[] date = dateString.split(" ");
         try {
-            PrintStream writer = new PrintStream(new FileOutputStream("changelog.dat", true));
+            PrintStream writer = new PrintStream(new FileOutputStream("changelog.txt", true));
             writer.println(p.getName() + " " + p.getQuantity() + " " + p.getPrice() + " " + change + " " + date[0] + " "
                     + date[1]);
             writer.close();

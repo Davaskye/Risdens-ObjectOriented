@@ -31,7 +31,7 @@ public class ChangelogScreen extends JFrame {
         setTitle("Changelog");
         pnlCommand = new JPanel();
         // thisForm = this;
-        clist = loadChangelog("changelog.dat");
+        clist = loadChangelog("changelog.txt");
 
         String[] columnNames = { "Date Changed",
                 "Time Changed",

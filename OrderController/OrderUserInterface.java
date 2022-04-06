@@ -109,6 +109,11 @@ public class OrderUserInterface extends JFrame implements ActionListener {
             tablelst.clear();
             // this.dispose();
         }
+        if (e.getSource() == serveOrderBtn) {
+
+            new ServeOrder(this);
+            // this.dispose();
+        }
         if (e.getSource() == closeBtn) {
             this.dispose();
         }
@@ -126,7 +131,6 @@ public class OrderUserInterface extends JFrame implements ActionListener {
                 Product prod = new Product(p[0], Integer.parseInt(p[1]), Double.parseDouble(p[2]), p[3]);
                 Order order = new Order(lst[0], lst[1], lst[2], lst[3], lst[4], prod);
                 this.tablelst.add(order);
-                // System.out.println(Arrays.toString(lst));
             }
         } catch (Exception e) {
             System.out.println("Something wrong : " + e);
@@ -204,7 +208,7 @@ class OrderEntry extends JFrame implements ActionListener {
 
         // test string options
 
-        String[] options = { "Allah", "Dalla" };
+        String[] options = productDisplay();
 
         pnlDisplay.add(new JLabel("Product:"));
         txtProduct = new JComboBox<>(options);
@@ -279,6 +283,16 @@ class OrderEntry extends JFrame implements ActionListener {
         }
     }
 
+    public String[] productDisplay() {
+        StockController sc = new StockController();
+        ArrayList<Product> prod = sc.plist;
+        String[] products = new String[prod.size()];
+        for (int i = 0; i < prod.size(); i++) {
+            products[i] = prod.get(i).getName();
+        }
+        return products;
+    }
+
     // public static void main(String[] args) {
     // new OrderEntry();
     // }
@@ -300,7 +314,7 @@ class OrderEdit extends JFrame implements ActionListener {
         this.frame = frame;
         setTitle("Edit an Order");
 
-        String[] options = { "1", "2", "3" };
+        String[] options = productDisplayNumber();
 
         cmdSave = new JButton("Edit");
         cmdClose = new JButton("Cancel");
@@ -327,7 +341,6 @@ class OrderEdit extends JFrame implements ActionListener {
             readData();
             for (int i = 0; i < tablelst1.size(); i++) {
                 String[][] order = tablelst1.get(i);
-                // System.out.println(Arrays.toString(order));
                 if (String.valueOf(i).equalsIgnoreCase(option)) {
 
                     tablelst.remove(i);
@@ -340,7 +353,6 @@ class OrderEdit extends JFrame implements ActionListener {
                     String quant = order[1][1];
                     String price = order[1][2];
                     String supp = order[1][3];
-                    System.out.println(name);
                     new Edit(name, tel, addr, dAddr, tod, prod, quant, price, supp, tablelst, i);
                     this.frame.dispose();
                     this.dispose();
@@ -373,11 +385,22 @@ class OrderEdit extends JFrame implements ActionListener {
                         Double.parseDouble(p[2]), p[3]);
                 Order order1 = new Order(lst[0], lst[1], lst[2], lst[3], lst[4], prod);
                 this.tablelst.add(order1);
-                System.out.println(Arrays.toString(lst));
             }
         } catch (Exception e) {
             System.out.println("Something wrong : " + e);
         }
+    }
+
+    public String[] productDisplayNumber() {
+        readData();
+        ArrayList<Order> prod = tablelst;
+        String[] products = new String[prod.size()];
+        for (int i = 0; i < prod.size(); i++) {
+            products[i] = String.valueOf(i);
+        }
+        tablelst.clear();
+        tablelst1.clear();
+        return products;
     }
 
     class Edit extends JFrame implements ActionListener {
@@ -432,7 +455,7 @@ class OrderEdit extends JFrame implements ActionListener {
 
             // test string options
 
-            String[] options = { "Allah", "Dalla" };
+            String[] options = productDisplay();
 
             pnlDisplay.add(new JLabel("Product:"));
             txtProduct = new JComboBox<>(options);
@@ -494,6 +517,16 @@ class OrderEdit extends JFrame implements ActionListener {
             }
         }
 
+        public String[] productDisplay() {
+            StockController sc = new StockController();
+            ArrayList<Product> prod = sc.plist;
+            String[] products = new String[prod.size()];
+            for (int i = 0; i < prod.size(); i++) {
+                products[i] = prod.get(i).getName();
+            }
+            return products;
+        }
+
         private void addOrderToDatabase() {
 
             try {
@@ -514,11 +547,116 @@ class OrderEdit extends JFrame implements ActionListener {
 
     }
 
-    // public void rewriteFile(ArrayList<Order> orders) {
-
-    // }
-
     // public static void main(String[] args) {
-    // new OrderEdit();
+    // OrderEdit oe = new OrderEdit(new JFrame());
+    // oe.productDisplay();
     // }
+}
+
+class ServeOrder extends JFrame implements ActionListener {
+
+    public JComboBox idOption;
+    public JPanel pnlCommand1;
+    public JLabel txtField;
+    public JButton cmdSave;
+    public JButton cmdClose;
+    public ArrayList<Order> tablelst = new ArrayList<Order>();
+    public ArrayList<String[][]> tablelst1 = new ArrayList<String[][]>();
+    public JFrame frame;
+
+    public ServeOrder(JFrame frame) {
+        this.frame = frame;
+        setTitle("Serve an Order");
+
+        String[] options = productDisplayNumber();
+
+        cmdSave = new JButton("Serve");
+        cmdClose = new JButton("Cancel");
+        cmdSave.addActionListener(this);
+        cmdClose.addActionListener(this);
+
+        pnlCommand1 = new JPanel();
+        txtField = new JLabel("Enter id number of order: ");
+        idOption = new JComboBox<>(options);
+        pnlCommand1.add(txtField);
+        pnlCommand1.add(idOption);
+        pnlCommand1.add(cmdSave);
+        pnlCommand1.add(cmdClose);
+        pnlCommand1.setLayout(new GridLayout(2, 2));
+        this.add(pnlCommand1);
+        this.setBounds(100, 100, 350, 100);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == cmdSave) {
+            this.frame.dispose();
+            this.dispose();
+            readData();
+            int index = Integer.parseInt(idOption.getSelectedItem().toString());
+            tablelst.remove(index);
+            addOrderToDatabase();
+            new OrderUserInterface();
+        }
+        if (e.getSource() == cmdClose) {
+            this.dispose();
+        }
+
+    }
+
+    public void readData() {
+        try {
+            File file = new File("Orders.txt");
+            Scanner scan = new Scanner(file);
+            while (scan.hasNextLine()) {
+                String data = scan.nextLine();
+                String[] lst = data.split("@", 0);
+                String data2 = lst[5];
+                String[] p = data2.split(" ", 0);
+                String[][] order = { { lst[0], lst[1], lst[2], lst[3], lst[4] }, { p[0], p[1], p[2], p[3] } };
+                tablelst1.add(order);
+
+                // DO NOT DELETE THE COMMENT BELOW, USED TO KNNOW WHICH ELEMENT HAS WHAT
+                // INFORMATIO
+
+                Product prod = new Product(p[0], Integer.parseInt(p[1]),
+                        Double.parseDouble(p[2]), p[3]);
+                Order order1 = new Order(lst[0], lst[1], lst[2], lst[3], lst[4], prod);
+                this.tablelst.add(order1);
+            }
+        } catch (Exception e) {
+            System.out.println("Something wrong : " + e);
+        }
+    }
+
+    private void addOrderToDatabase() {
+
+        try {
+            File file = new File("Orders.txt");
+            FileWriter writer = new FileWriter(file, false);
+            for (Order o : tablelst) {
+                writer.write(o.getName() + "@" + o.getTele() + "@" + o.getAddress() + "@" +
+                        o.getDeliveryAdd() + "@"
+                        + o.getTOD() + "@" + o.getProduct() + "\n");
+            }
+            writer.close();
+        } catch (IOException error) {
+            JFrame popupError = new JFrame();
+            JOptionPane.showMessageDialog(popupError, "Error adding to file.");
+        }
+
+    }
+
+    public String[] productDisplayNumber() {
+        readData();
+        ArrayList<Order> prod = tablelst;
+        String[] products = new String[prod.size()];
+        for (int i = 0; i < prod.size(); i++) {
+            products[i] = String.valueOf(i);
+        }
+        tablelst.clear();
+        tablelst1.clear();
+        return products;
+    }
 }

@@ -42,7 +42,7 @@ public class StockController extends JPanel {
 
     private JPanel pnlCommand;
     // private JPanel pnlDisplay;
-    private ArrayList<Product> plist; // Product/Product listing
+    public ArrayList<Product> plist; // Product/Product listing
     private StockController thisForm;
     private JScrollPane scrollPane;
 

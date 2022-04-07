@@ -33,6 +33,7 @@ public class OrderUserInterface extends JFrame implements ActionListener {
     public JButton addOrderBtn;
     public JButton editOrderBtn;
     public JButton serveOrderBtn;
+    public JButton viewReceiptBtn;
     public JButton closeBtn;
 
     // Creating layout for interface
@@ -73,11 +74,13 @@ public class OrderUserInterface extends JFrame implements ActionListener {
         addOrderBtn = new JButton("Add Order");
         editOrderBtn = new JButton("Edit Order");
         serveOrderBtn = new JButton("Serve Order");
+        viewReceiptBtn = new JButton("View Receipt");
         closeBtn = new JButton("Close");
 
         addOrderBtn.addActionListener(this);
         editOrderBtn.addActionListener(this);
         serveOrderBtn.addActionListener(this);
+        viewReceiptBtn.addActionListener(this);
         closeBtn.addActionListener(this);
 
         pnlCommand1 = new JPanel();
@@ -86,8 +89,9 @@ public class OrderUserInterface extends JFrame implements ActionListener {
         pnlCommand1.add(addOrderBtn);
         pnlCommand1.add(editOrderBtn);
         pnlCommand1.add(serveOrderBtn);
+        pnlCommand1.add(viewReceiptBtn);
         pnlCommand1.add(closeBtn);
-        // pnlCommand1.setLayout(new GridLayout(3, 1));
+
         this.setLayout(new GridLayout(2, 1));
 
         add(pnlCommand2);
@@ -107,12 +111,13 @@ public class OrderUserInterface extends JFrame implements ActionListener {
         if (e.getSource() == editOrderBtn) {
             new OrderEdit(this);
             tablelst.clear();
-            // this.dispose();
         }
         if (e.getSource() == serveOrderBtn) {
 
             new ServeOrder(this);
-            // this.dispose();
+        }
+        if (e.getSource() == viewReceiptBtn) {
+
         }
         if (e.getSource() == closeBtn) {
             this.dispose();
@@ -159,9 +164,9 @@ public class OrderUserInterface extends JFrame implements ActionListener {
         return this.tablelst;
     }
 
-    // public static void main(String[] args) {
-    // new OrderUserInterface();
-    // }
+    public static void main(String[] args) {
+        new OrderUserInterface();
+    }
 
 }
 

@@ -2,6 +2,9 @@ package OrderController;
 
 import javax.swing.JFrame;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
 public class ViewReceipt extends JFrame implements ActionListener {
 
@@ -31,7 +34,17 @@ public class ViewReceipt extends JFrame implements ActionListener {
         // JADA
         // this function should create the receipt database if it doesnt already exist
         // and store the data received from the first constructor
+    try {
+        File file = new File("Receipts.txt");
+        FileWriter myWriter = new FileWriter(file, false);
+            myWriter.write(this.served.toString() + "@" +  "\n");
+    
+        myWriter.close();
+    } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
     }
+}
 
     public void readData() {
         // DAVASKYE

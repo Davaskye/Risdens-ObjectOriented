@@ -3,12 +3,9 @@ package OrderController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -117,7 +114,7 @@ public class OrderUserInterface extends JFrame implements ActionListener {
             new ServeOrder(this);
         }
         if (e.getSource() == viewReceiptBtn) {
-
+            new ViewReceipt();
         }
         if (e.getSource() == closeBtn) {
             this.dispose();
@@ -137,6 +134,7 @@ public class OrderUserInterface extends JFrame implements ActionListener {
                 Order order = new Order(lst[0], lst[1], lst[2], lst[3], lst[4], prod);
                 this.tablelst.add(order);
             }
+            scan.close();
         } catch (Exception e) {
             System.out.println("Something wrong : " + e);
         }
@@ -391,6 +389,7 @@ class OrderEdit extends JFrame implements ActionListener {
                 Order order1 = new Order(lst[0], lst[1], lst[2], lst[3], lst[4], prod);
                 this.tablelst.add(order1);
             }
+            scan.close();
         } catch (Exception e) {
             System.out.println("Something wrong : " + e);
         }
@@ -569,6 +568,9 @@ class ServeOrder extends JFrame implements ActionListener {
     public ArrayList<String[][]> tablelst1 = new ArrayList<String[][]>();
     public JFrame frame;
 
+    public JTextField txtPayment;
+
+
     public ServeOrder(JFrame frame) {
         this.frame = frame;
         setTitle("Serve an Order");
@@ -583,11 +585,18 @@ class ServeOrder extends JFrame implements ActionListener {
         pnlCommand1 = new JPanel();
         txtField = new JLabel("Enter id number of order: ");
         idOption = new JComboBox<>(options);
+
         pnlCommand1.add(txtField);
         pnlCommand1.add(idOption);
+
+        pnlCommand1.add(new JLabel("Payment:"));
+        txtPayment = new JTextField(20);
+        pnlCommand1.add(txtPayment);
+
+        
         pnlCommand1.add(cmdSave);
         pnlCommand1.add(cmdClose);
-        pnlCommand1.setLayout(new GridLayout(2, 2));
+        pnlCommand1.setLayout(new GridLayout(3, 3));
         this.add(pnlCommand1);
         this.setBounds(100, 100, 350, 100);
         this.setVisible(true);
@@ -600,7 +609,14 @@ class ServeOrder extends JFrame implements ActionListener {
             this.dispose();
             readData();
             int index = Integer.parseInt(idOption.getSelectedItem().toString());
+            Order myOrder = tablelst.get(index);
             tablelst.remove(index);
+            //Should add reference to adding to receipt here.
+            Double payment = Double.parseDouble(txtPayment.getText());
+            Receipt r = new Receipt(myOrder, payment);
+            ViewReceipt newR = new ViewReceipt(r);
+            newR.createFile();
+            
             addOrderToDatabase();
             new OrderUserInterface();
         }
@@ -630,6 +646,7 @@ class ServeOrder extends JFrame implements ActionListener {
                 Order order1 = new Order(lst[0], lst[1], lst[2], lst[3], lst[4], prod);
                 this.tablelst.add(order1);
             }
+            scan.close();
         } catch (Exception e) {
             System.out.println("Something wrong : " + e);
         }

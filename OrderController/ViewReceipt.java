@@ -18,6 +18,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
 import ProductManager.Product;
 import ProductManager.StockController;

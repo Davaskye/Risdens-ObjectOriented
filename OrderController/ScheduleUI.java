@@ -79,11 +79,11 @@ public class ScheduleUI extends JFrame implements ActionListener {
                 Date d1 = new Date(rlist2.get(x).getOrder().getTOD());
                 String date1 = d1.toString();
                 String compare = dates.get(i).toString();
-                System.out.println("Compare : --> " + compare);
-                System.out.println("Date1 : --> " + date1);
+                //System.out.println("Compare : --> " + compare);
+                //System.out.println("Date1 : --> " + date1);
                 if (compare.equalsIgnoreCase(date1)) {
                     addToTable(rlist.get(x));
-                    System.out.println("They are equal : --> " + compare + " == " + date1);
+                    //System.out.println("They are equal : --> " + compare + " == " + date1);
                     break;
                 }
                 x++;

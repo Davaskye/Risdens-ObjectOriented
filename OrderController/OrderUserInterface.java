@@ -31,6 +31,7 @@ public class OrderUserInterface extends JFrame implements ActionListener {
     public JButton editOrderBtn;
     public JButton serveOrderBtn;
     public JButton viewReceiptBtn;
+    public JButton viewScheduleBtn;
     public JButton closeBtn;
 
     // Creating layout for interface
@@ -72,12 +73,14 @@ public class OrderUserInterface extends JFrame implements ActionListener {
         editOrderBtn = new JButton("Edit Order");
         serveOrderBtn = new JButton("Serve Order");
         viewReceiptBtn = new JButton("View Receipt");
+        viewScheduleBtn = new JButton("View Schedule");
         closeBtn = new JButton("Close");
 
         addOrderBtn.addActionListener(this);
         editOrderBtn.addActionListener(this);
         serveOrderBtn.addActionListener(this);
         viewReceiptBtn.addActionListener(this);
+        viewScheduleBtn.addActionListener(this);
         closeBtn.addActionListener(this);
 
         pnlCommand1 = new JPanel();
@@ -87,6 +90,7 @@ public class OrderUserInterface extends JFrame implements ActionListener {
         pnlCommand1.add(editOrderBtn);
         pnlCommand1.add(serveOrderBtn);
         pnlCommand1.add(viewReceiptBtn);
+        pnlCommand1.add(viewScheduleBtn);
         pnlCommand1.add(closeBtn);
 
         this.setLayout(new GridLayout(2, 1));
@@ -114,7 +118,10 @@ public class OrderUserInterface extends JFrame implements ActionListener {
             new ServeOrder(this);
         }
         if (e.getSource() == viewReceiptBtn) {
-            new ViewReceipt();
+            new ReceiptUI();
+        }
+        if (e.getSource() == viewScheduleBtn) {
+            new ScheduleUI();
         }
         if (e.getSource() == closeBtn) {
             this.dispose();
@@ -570,7 +577,6 @@ class ServeOrder extends JFrame implements ActionListener {
 
     public JTextField txtPayment;
 
-
     public ServeOrder(JFrame frame) {
         this.frame = frame;
         setTitle("Serve an Order");
@@ -593,7 +599,6 @@ class ServeOrder extends JFrame implements ActionListener {
         txtPayment = new JTextField(20);
         pnlCommand1.add(txtPayment);
 
-        
         pnlCommand1.add(cmdSave);
         pnlCommand1.add(cmdClose);
         pnlCommand1.setLayout(new GridLayout(3, 3));
@@ -611,12 +616,12 @@ class ServeOrder extends JFrame implements ActionListener {
             int index = Integer.parseInt(idOption.getSelectedItem().toString());
             Order myOrder = tablelst.get(index);
             tablelst.remove(index);
-            //Should add reference to adding to receipt here.
+            // Should add reference to adding to receipt here.
             Double payment = Double.parseDouble(txtPayment.getText());
             Receipt r = new Receipt(myOrder, payment);
-            ViewReceipt newR = new ViewReceipt(r);
+            ReceiptUI newR = new ReceiptUI(r);
             newR.createFile();
-            
+
             addOrderToDatabase();
             new OrderUserInterface();
         }

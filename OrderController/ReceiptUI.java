@@ -160,18 +160,7 @@ public class ReceiptUI extends JFrame implements ActionListener {
         }
     }
 
-    public void readData() {
-        // DAVASKYE
-        // this function should read from the file created/that already exists to be
-        // displayed on the User Interface
-
-    }
-
     public void actionPerformed(ActionEvent e) {
-        // DAVASKYE
-        // this function is the action listener for any buttons on the User Interface
-        // can review OrderUserInterface class to see how its done if you are not
-        // familiar with writing it this way
         if (e.getSource() == cmdClose) {
             this.dispose();
         }

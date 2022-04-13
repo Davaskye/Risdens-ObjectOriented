@@ -10,12 +10,12 @@ import ProductManager.Product;
 
 public class Order {
 
-    public String name;
-    public String tele;
-    public String address;
-    public String deliveryAddress;
-    public String TOD; // TOD means Time Of Delivery
-    public Product product;
+    private String name;
+    private String tele;
+    private String address;
+    private String deliveryAddress;
+    private String TOD; // TOD means Time Of Delivery
+    private Product product;
 
     // Constructor taking information to create an order
     // This can turn out to be infomation we can use elsewhere and just inputting
